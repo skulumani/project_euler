@@ -18,3 +18,5 @@ def p1(range_max, factor_list):
             # print(num)
 
     print("Summation of multiples is: %g" % sum_multiples)
+
+    return sum_multiples
