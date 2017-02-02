@@ -45,3 +45,44 @@ def p2(max):
     print("Sum of even Fibonacci numbers less than %f is %g" % (max, sum_even))
 
     return sum_even
+
+def p3(n):
+    """Problem 3
+    The prime factors of 13195 are 5, 7, 13 and 29.
+
+    What is the largest prime factor of the number 600851475143 ?
+    """
+    if n < 2:
+        print("No primes less than 2")
+        return []
+
+    prime_factors = []
+
+    for p in prime_sieve(int(n/2.0)):
+        if p*p > n:
+            break
+        if n % p == 0:
+            prime_factors.append(p)
+
+    return max(prime_factors)
+
+def prime_sieve(n):
+    """Sieve of Erathosthenes
+
+    Output the list of all primes less than n
+    """
+
+    not_prime = []
+    prime = []
+
+    if n < 2:
+        print("No primes less than 2")
+        return 1
+
+    for i in range(2, n+1):
+        if i not in not_prime:
+            prime.append(i)
+            for j in range(i*i,n+1, i):
+                not_prime.append(j)
+
+    return prime
