@@ -1,3 +1,5 @@
+import numpy as np
+import pdb
 
 def p1(range_max, factor_list):
     """Problem 1
@@ -45,28 +47,7 @@ def p2(max):
     print("Sum of even Fibonacci numbers less than %f is %g" % (max, sum_even))
 
     return sum_even
-
-def p3(n):
-    """Problem 3
-    The prime factors of 13195 are 5, 7, 13 and 29.
-
-    What is the largest prime factor of the number 600851475143 ?
-    """
-    if n < 2:
-        print("No primes less than 2")
-        return []
-
-    prime_factors = []
-
-    for p in prime_sieve(int(n/2.0)):
-        if p*p > n:
-            break
-        if n % p == 0:
-            prime_factors.append(p)
-
-    return max(prime_factors)
-
-def prime_sieve(n):
+def prime_sieve_erathosthenes(n):
     """Sieve of Erathosthenes
 
     Output the list of all primes less than n
@@ -86,3 +67,36 @@ def prime_sieve(n):
                 not_prime.append(j)
 
     return prime
+
+def primesfrom2to(num):
+    """ Input n>=6, Returns a array of primes, 2 <= p < n """
+    pdb.set_trace()
+    sieve = np.ones(num//3 + (num%6==2), dtype=np.bool)
+    for i in range(1,int(num**0.5)//3+1):
+        if sieve[i]:
+            k=3*i+1|1
+            sieve[       k*k/3     ::2*k] = False
+            sieve[k*(k-2*(i&1)+4)//3::2*k] = False
+    return np.r_[2,3,((3*np.nonzero(sieve)[0][1:]+1)|1)]
+
+def p3(num):
+    """Problem 3
+    The prime factors of 13195 are 5, 7, 13 and 29.
+
+    What is the largest prime factor of the number 600851475143 ?
+    """
+    if num < 2:
+        print("No primes less than 2")
+        return []
+
+    prime_factors = np.array([])
+    pdb.set_trace()
+    for p in primesfrom2to(int(num//2)):
+        if p*p > num:
+            break
+        if num % p == 0:
+            prime_factors.append(p)
+
+    return max(prime_factors)
+
+
