@@ -20,4 +20,5 @@ def test_primesfrom2to():
     np.testing.assert_allclose(primesfrom2to(30),[2, 3, 5, 7, 11, 13, 17, 19, 23, 29])
 
 def test_p3_ex():
-    assert p3(13195) == 29
+    np.testing.assert_allclose(p3(13195),29)
+    

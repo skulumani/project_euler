@@ -70,12 +70,12 @@ def prime_sieve_erathosthenes(n):
 
 def primesfrom2to(num):
     """ Input n>=6, Returns a array of primes, 2 <= p < n """
-    pdb.set_trace()
+
     sieve = np.ones(num//3 + (num%6==2), dtype=np.bool)
     for i in range(1,int(num**0.5)//3+1):
         if sieve[i]:
             k=3*i+1|1
-            sieve[       k*k/3     ::2*k] = False
+            sieve[       k*k//3     ::2*k] = False
             sieve[k*(k-2*(i&1)+4)//3::2*k] = False
     return np.r_[2,3,((3*np.nonzero(sieve)[0][1:]+1)|1)]
 
@@ -88,15 +88,15 @@ def p3(num):
     if num < 2:
         print("No primes less than 2")
         return []
-
-    prime_factors = np.array([])
     pdb.set_trace()
-    for p in primesfrom2to(int(num//2)):
+    prime_factors = np.array([])
+    smaller_primes = primesfrom2to(num//2)
+    for p in smaller_primes:
         if p*p > num:
             break
         if num % p == 0:
-            prime_factors.append(p)
+            np.append(prime_factors, p)
 
-    return max(prime_factors)
+    return np.amax(prime_factors)
 
 
