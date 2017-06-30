@@ -68,6 +68,23 @@ def prime_sieve_erathosthenes(n):
 
     return prime
 
+def gen_primes(n):
+    """Yield primes less than n
+    """
+    D = {}
+    q = 2
+    while q < n:
+        if q not in D:
+            yield q
+
+            D[q * q] = [q]
+        else:
+            for p in D[q]:
+                D.setdefault(p + q, []).append(p)
+            del D[q]
+
+        q += 1
+
 def primesfrom2to(num):
     """ Input n>=6, Returns a array of primes, 2 <= p < n """
 
@@ -96,15 +113,13 @@ def p3(num):
     if num < 2:
         print("No primes less than 2")
         return []
-    pdb.set_trace()
-    prime_factors = np.array([])
-    smaller_primes = primesfrom2to(num//2)
-    for p in smaller_primes:
-        if p*p > num:
-            break
+    largest_factor = 0 
+    for p in gen_primes(num//2 + 1):
         if num % p == 0:
-            np.append(prime_factors, p)
+            # this is a prime factor
+            if p > largest_factor:
+                largest_factor = p
 
-    return np.amax(prime_factors)
+    return largest_factor
 
 
